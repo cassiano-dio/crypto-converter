@@ -12,30 +12,43 @@ import Axios from 'axios'
 
 const Home = () => {
 
-    //const dataset  = useFetchData("https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl");
-    const [myArray, setMyArray] = React.useState({});
+    /**
+     * O problema acontece aqui nessa parte:
+     * Quando eu inicio o projeto pela primeira vez os valores são carregados normalmente da API, mas quando atualiza a opagina não carrega
+     * mais os dados.
+     * 
+     * Também não achei legal essa forma de carregar os valores iniciais das criptomoedas, acho meio "gambiarra"
+     * Aceito sujestões de melhorias.
+     */
 
+
+    //const dataset  = useFetchData("https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl");
+    const [ratesArray, setRatesArray] = React.useState({});
+
+
+    //Consome dados da API do Coingecko com os valores de várias criptomoedas
     useEffect(() => {
         Axios.get('https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl')
         .then((response) => {
            
-                setMyArray(response);
+            setRatesArray(response);
             
         });
-    }, []);
+    },[]);
 
     //console.log(dataset.data)
 
-    console.log(myArray)
+    console.log({ratesArray})
     
 
+    //Carrega inicia com um vetor de criptomoedas com seus respectivos simbolos e valores capturados da API
     const tiles = [
-        // {id:1, icon:btc, name:"BTC", rate: dataset.data[0].current_price},
-        // {id:2, icon:eth, name:"ETH", rate: dataset.data[1].current_price},
-        // {id:3, icon:ltc, name:"LTC", rate: dataset.data[20].current_price},
-        {id:1, icon:btc, name:"BTC", rate: myArray.data[0].current_price},
-        {id:2, icon:eth, name:"ETH", rate: myArray.data[1].current_price},
-        {id:3, icon:ltc, name:"LTC", rate: myArray.data[21].current_price},
+        {id:1, icon:btc, name:"BTC", rate: 140000},
+        {id:2, icon:eth, name:"ETH", rate: 8000},
+        {id:3, icon:ltc, name:"LTC", rate: 300},
+        // {id:1, icon:btc, name:"BTC", rate: ratesArray.data[0].current_price},
+        // {id:2, icon:eth, name:"ETH", rate: ratesArray.data[1].current_price},
+        // {id:3, icon:ltc, name:"LTC", rate: ratesArray.data[21].current_price},
     ]
 
     const [selectedTile, setSelectedTile] = useState(tiles[0])
