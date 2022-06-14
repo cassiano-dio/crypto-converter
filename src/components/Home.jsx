@@ -21,9 +21,29 @@ const Home = () => {
      * Aceito sujestões de melhorias.
      */
 
+    const mainContainer = {
+        display: "flex",
+        flexDirection: "row"
+    }
+
+    const cardsContainer = {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        alignContent: "center",
+        marginTop: "10%",
+        paddingBottom: "5%",
+        paddingTop: "5%",
+        fontSize: "18px",
+        borderRadius: "5px",
+        border: "1px solid cadetblue",
+        color:"dimgray"
+    }
+
 
     //const dataset  = useFetchData("https://api.coingecko.com/api/v3/coins/markets?vs_currency=brl");
-    const [ratesArray, setRatesArray] = React.useState({});
+    const [ratesArray, setRatesArray] = useState({});
+    const [tilesList, setTilesList] = useState([]);
 
 
     //Consome dados da API do Coingecko com os valores de várias criptomoedas
@@ -32,13 +52,18 @@ const Home = () => {
         .then((response) => {
            
             setRatesArray(response);
+            setTilesList([{id:1, icon:btc, name:"BTC", rate:140000},
+            {id:2, icon:eth, name:"ETH", rate: 8000},
+            {id:3, icon:ltc, name:"LTC", rate: 300},]);
+            
             
         });
+        console.log("TILESLIST:", tilesList)
     },[]);
 
-    //console.log(dataset.data)
+    console.log("Rates Array:", ratesArray)
 
-    console.log({ratesArray})
+    
     
 
     //Carrega inicia com um vetor de criptomoedas com seus respectivos simbolos e valores capturados da API
@@ -64,10 +89,11 @@ const Home = () => {
 
     }
     return ( 
-        <div>
-            <div>
+        <div style={mainContainer}>
+            <div >
                 <div>
-                    <div>
+                    <div style={cardsContainer}>
+                        
                         {
                             tiles.map(
                                 (coin) => (
@@ -82,10 +108,13 @@ const Home = () => {
                         }
                     </div>
                 </div>
-                <BuyForm data={selectedTile} onPurchase={buildList}/>
-                <div>
-                    <Transactions list={list}/>
+                <div className='forms-container'>
+                    <BuyForm data={selectedTile} onPurchase={buildList}/>
+                    <div>
+                        <Transactions list={list}/>
+                    </div>
                 </div>
+                
             </div>
         </div>
     )

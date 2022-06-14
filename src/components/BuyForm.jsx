@@ -1,10 +1,24 @@
 import React, {useState, useEffect, useCallback} from 'react'
 import InputBase from './InputBase'
+import styled from 'styled-components'
+
+const InputButton = styled.input`
+    width: 75%;
+    margin-top: 20px;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    border-radius: 5px;
+    border: transparent;
+    margin: 10px;
+    color:dimgray;
+    background-color: cadetblue;
+`
+
 
 const BuyForm = ({data, onPurchase}) => {
 
     const {name, rate } = data
-    const init = {amount: 0, converted: 0}
+    const init = {amount: "", converted: ""}
     const [exchange, setExchange] = useState(init)
     const [transactions, setTransactions] = useState([])
 
@@ -23,7 +37,7 @@ const BuyForm = ({data, onPurchase}) => {
     )
 
     const generateId = (prefix) => Math.random().toString(36).replace('0.', prefix || '')
-
+////////////////////////////////
     const handleChange = ({target:{value,name}}) => {
         const val = Number(value.trim())
         const converted = (val/rate).toFixed(8)
@@ -57,12 +71,14 @@ const BuyForm = ({data, onPurchase}) => {
 
     return (
         <form onSubmit={makePurchase}>
-            <div>
-            <InputBase name="amount" label="BRL" onChange={handleChange} />
-                <i className='fa fa-exchange-alt' />
-                <InputBase value={exchange.converted}disabled label={name} />
+            <div className="buy-form-container">
+                
+                <h4 >Comprar {name}</h4>
+                <InputBase name="amount" label="BRL" onChange={handleChange} className="brl-input"/>
+                <InputBase value={exchange.converted} disabled label={name} />
+                
+                <InputButton type="submit" value="Comprar" className="button-input"/>
             </div>
-            <input type="submit" value="Comprar" />
         </form>
     )
 

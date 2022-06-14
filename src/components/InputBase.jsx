@@ -1,9 +1,23 @@
 import React from 'react'
+import styled from 'styled-components'
+
+
+const Input = styled.input`
+    width: 75%;
+    margin-top: 20px;
+    padding-top: 2.5%;
+    padding-bottom: 2.5%;
+    border-radius: 5px;
+    border: transparent;
+    margin: 10px;
+    color:dimgray;
+`
+
 
 const InputBase = ({label, ...props}) => (
         <>
-            <input type="number" {...props}/>
-            <span>{label}</span>
+            <Input type="number" {...props} placeholder={label} />
+            {/* <span>{label}</span> */}
         </>
     )
 
